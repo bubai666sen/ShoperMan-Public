@@ -12,23 +12,34 @@ class Products(models.Model):
     tags= models.ManyToManyField(Tag,blank=True)
 
     def tag_names(self):
-        return ', '.join([a.name for a in self.tags.all()])
+        return ' , '.join([a.name for a in self.tags.all()])
     tag_names.short_description = "Tag Names"
+
+    def tagCount(self,l):
+        input_list = [] 
+        [input_list.append(x) for x in l if x not in input_list]
+        product_list = [] 
+        [product_list.append(x) for x in self.tag_names().strip(' , ').split(' , ') if x not in product_list]
+        tag_count = 0 
+        for item in product_list:
+            tag_count += input_list.count(item)
+        return tag_count
+    tagCount.short_description = "Number of tags matched against given list"
 
     def __str__(self):           
         return str(self.name)
 
     @staticmethod
     def get_products_by_id(ids):
-        return Products.objects.filter (id__in=ids)
+        return Products.objects.filter (id__in=ids).order_by('-id')
     @staticmethod
     def get_all_products():
-        return Products.objects.all()
+        return Products.objects.all().order_by('-id')
 
     @staticmethod
     def get_all_products_by_categoryid(category_id):
         if category_id:
-            return Products.objects.filter (category=category_id)
+            return Products.objects.filter (category=category_id).order_by('-id')
         else:
             return Products.get_all_products();
 
