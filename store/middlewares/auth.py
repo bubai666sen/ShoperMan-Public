@@ -14,3 +14,18 @@ def auth_middleware(get_response):
         return response
 
     return middleware
+
+def vendor_auth_middleware(get_response):
+    # One-time configuration and initialization.
+
+    def middleware(request):
+        print(request.session.get('vendor'))
+        returnUrl = request.META['PATH_INFO']
+        print(request.META['PATH_INFO'])
+        if not request.session.get('vendor'):
+           return redirect(f'vendor-login?return_url={returnUrl}')
+
+        response = get_response(request)
+        return response
+
+    return middleware

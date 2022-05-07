@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<!-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> -->
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script> -->
+<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+<p></p>
+<div class="container" style="background-color: aliceblue;">
+    <h1>{{msg}}</h1>
+    {% load crispy_forms_tags %}
+    <form action = "{% url 'add-product' %}" method = "post" enctype= multipart/form-data>
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Submit" class="btn btn-success">
+    </form>
+    <hr>
+</div>
+<p></p>
+<script>
+$("#id_tags").select2({
+    placeholder: "Select applicable tags",
+    allowClear: true,
+    maximumSelectionSize: 10
+});
+// tinymce.init({
+//     selector: '.tinymce'
+// });
+
+// $('textarea[name="description"]').summernote();
+
+// ClassicEditor
+//     .create( document.querySelector( 'textarea[name="description"]' ) )
+//     .then( editor => {
+//             console.log( editor );
+//     } )
+//     .catch( error => {
+//             console.error( error );
+//     } );
+
+CKEDITOR.replace( 'description' );
+</script>
+{% endblock %}

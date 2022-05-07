@@ -37,7 +37,7 @@
 			<h2>Reccommended for you</h2>
 			<div class="row mx-auto">
 				{% for item in recommended_products %}
-				<div class="card mx-auto mb-3" id={{item.product.id}} style="width: 18rem;">
+				<div class="card mx-auto mb-4" id={{item.product.id}} style="width: 18rem;overflow: auto;">
 					<img class="card-img-top" src="{{item.product.image.url}}" alt="Card image cap">
 					<div class="card-body">
 						<p class="card-title">{{item.product.name}}</p>

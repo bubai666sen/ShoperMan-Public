@@ -1,13 +1,16 @@
 from django.db import models
 from .category import Category
+from .vendor import Vendor
 from .tags import Tag
 from tinymce.models import HTMLField
+from django import forms
 
 class Products(models.Model):
     name = models.CharField(max_length=60)
     price= models.IntegerField(default=0)
     category= models.ForeignKey(Category,on_delete=models.CASCADE)
     description= HTMLField(null=True, blank=True)
+    vendor= models.ForeignKey(Vendor,on_delete=models.CASCADE,null=True, blank=True)
     image= models.ImageField(upload_to='uploads/products/')
     tags= models.ManyToManyField(Tag,blank=True)
 
@@ -29,6 +32,9 @@ class Products(models.Model):
     def __str__(self):           
         return str(self.name)
 
+    
+        
+
     @staticmethod
     def get_products_by_id(ids):
         return Products.objects.filter (id__in=ids).order_by('-id')
@@ -43,5 +49,16 @@ class Products(models.Model):
         else:
             return Products.get_all_products();
 
+    @staticmethod
+    def get_products_by_vendor(vendor_id):
+        return Products.objects.filter (vendor=vendor_id).order_by('-id')
+
     class Meta:
         verbose_name_plural = "Products"
+
+# create a ModelForm
+class ProductForm(forms.ModelForm):
+    # specify the name of model to use
+    class Meta:
+        model = Products
+        fields = [ 'name', 'price', 'category', 'description'  , 'image',  'tags' ]
