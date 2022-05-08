@@ -5,14 +5,45 @@
 {% load cart %}
 {% load custom_filter %}
 {% load static %}
-<div class="container">
-   <div class="border rounded p-4 m-4" style="background-color: aliceblue;">
 
-        <h2>Data Visualization</h2>
-        <hr/>
-        <img src="{% static 'bi/barchart.png' %}" />
-        <img src="{% static 'bi/piechart.png' %}" />
-        <p class="display-4 pl-4 ml-2">Your Products</p> <a href="{% url 'add-product' %}" type="button" class="btn btn-success">Add Product</a>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div class="container" style="background-color: white;">
+    <h2>Vendor Portal</h2>
+    
+    <a href="{% url 'add-product' %}" type="button" class="btn btn-success"> Add Product </a><p> </p>
+  
+    <ul class="nav  row">
+      <li id="bi" class="active col-sm-4"> <a data-toggle="tab" href="#dashboard"> Dashboard </a> </li>
+      <li class="col-sm-4">  <a data-toggle="tab" href="#products"> Your Products </a> </li>
+      <li class="col-sm-4"> <a data-toggle="tab" href="#orders"> Your Orders </a></li>
+    </ul>
+  
+
+    <div class="tab-content">
+        <hr>
+      <div id="dashboard" class="tab-pane  active">
+        <h3>Data Visualization</h3>
+       
+            <div class="row">
+                    
+                <img src="{% static 'bi/customer_amount_barchart.png' %}" style="width:50%;"/>
+            
+                <img src="{% static 'bi/customer_order_count_piechart.png' %}" style="width:50%;"/>
+            </div>
+
+            <div class="row">
+                
+                <img src="{% static 'bi/barchart.png' %}" style="width:50%;"/>
+            
+                <img src="{% static 'bi/piechart.png' %}" style="width:50%;"/>
+            </div>
+
+            
+      </div>
+      <div id="products" class="tab-pane fade">
+        <h3>Your Products</h3>
         <p></p>
         <table class="table table-responsive">
             <thead>
@@ -40,43 +71,58 @@
             </tbody>
 
         </table>
-        <hr>
-        <p class="display-4 pl-4 ml-4">Your Orders</p>
+      </div>
+      <div id="orders" class="tab-pane fade">
+        <h3>Your Orders</h3>
+        <p></p>
         {% for orders in order_list %}
         {% if orders %}
         <table class="table table-responsive">
             <thead>
                 <tr>
                     <th>Sno.</th>
-                    <th>Image</th>
-                    <th>Product</th>
                     <th>Customer</th>
                     <th>Date</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
+                    <th>Phone</th>
+                    <th>Address</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 
                 {% for order in orders %}
+
+                {% if forloop.first %}
+                <tr>
+                    <th>
+                        <img style="height: 80px;" class="" src="{{order.product.image.url}}" alt="">
+                    </th>
+                    <th>
+                        All orders for {{order.product.name}}
+                    </th>
+                    <th> </th><th></th><th></th><th></th><th></th><th></th><th></th>
+                </tr>
+                
+                {% endif %}
+
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td><img style="height: 80px;" class="rounded-circle" src="{{order.product.image.url}}" alt=""></td>
-                    <td>{{order.product.name}}</td>
                     <td>{{order.customer}}</td>
                     <td>{{order.date}}</td>
                     <td>{{order.price|currency}}</td>
                     <td>{{order.quantity}}</td>
                     <td>{{order.quantity|multiply:order.price|currency}}</td>
+                    <td>{{order.phone}}</td>
+                    <td>{{order.address}}</td>
                     {% if order.status %}
                     <td><small class="badge badge-success">Completed</small></td>
                     {%else%}
                     <td><small class="badge badge-warning">Pending</small></td>
                     {% endif %}
                 </tr>
-
                 {% endfor %}
             
             </tbody>
@@ -85,8 +131,8 @@
         <hr>
         {% endif %}
         {% endfor %}
-        
-        
-   </div>
+      </div>
+    </div>
 </div>
+
 {% endblock %}
