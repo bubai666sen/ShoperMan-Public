@@ -3,8 +3,12 @@ from .models.product import Products
 from .models.category import Category
 from .models.customer import Customer
 from .models.orders import Order
+from .models.vendor import Vendor 
 from .models.tags import Tag
 from django.utils.html import format_html
+
+class VendorAdmin(admin.ModelAdmin):
+    list_display = ['company_name','email','first_name','last_name']
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['customer','product','price','phone','date','status']
@@ -35,6 +39,7 @@ admin.site.register(Category)
 admin.site.register(Customer)
 admin.site.register(Order,OrderAdmin)
 admin.site.register(Tag,TagAdmin)
+admin.site.register(Vendor,VendorAdmin)
 
 
 # username = Tanushree, email = tanushree7252@gmail.com, password = 1234

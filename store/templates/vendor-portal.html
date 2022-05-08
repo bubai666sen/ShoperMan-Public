@@ -4,9 +4,14 @@
 {% block content %}
 {% load cart %}
 {% load custom_filter %}
+{% load static %}
 <div class="container">
    <div class="border rounded p-4 m-4" style="background-color: aliceblue;">
-    
+
+        <h2>Data Visualization</h2>
+        <hr/>
+        <img src="{% static 'bi/barchart.png' %}" />
+        <img src="{% static 'bi/piechart.png' %}" />
         <p class="display-4 pl-4 ml-2">Your Products</p> <a href="{% url 'add-product' %}" type="button" class="btn btn-success">Add Product</a>
         <p></p>
         <table class="table table-responsive">
