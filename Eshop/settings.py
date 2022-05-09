@@ -119,7 +119,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_NAME = 'Shoper Man'
+SITE_NAME = 'ShoperMan'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
