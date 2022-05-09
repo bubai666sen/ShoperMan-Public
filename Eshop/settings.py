@@ -119,7 +119,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_NAME = 'ShoperMan'
+SITE_NAME = 'Shoper Man'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -132,9 +132,17 @@ SITE_NAME = 'ShoperMan'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # STATIC_ROOT = '/var/www/static/'
-STATIC_ROOT = "/var/www/http://shoperman.azurewebsites.net/static/"
+#STATIC_ROOT = "/var/www/http://shoperman.azurewebsites.net/static/"
+
+if DEBUG:
+
+  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+else:
+
+  STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = "/image/download/"
 MEDIA_ROOT = BASE_DIR
